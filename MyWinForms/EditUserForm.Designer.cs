@@ -136,7 +136,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "EditUserForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "EditUserForm";
+            this.Text = "Змінити";
             this.Load += new System.EventHandler(this.EditUserForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pbImage)).EndInit();
             this.ResumeLayout(false);

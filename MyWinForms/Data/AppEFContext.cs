@@ -11,7 +11,7 @@ namespace MyWinForms.Data
     {     
         public AppEFContext()
         {         
-        //this.Database.EnsureCreated();
+        //this.Database.EnsureCreated();     //якщо не використовуємо міграцію даних    
         }
         public DbSet<AppUser> Users { get; set; }
         public DbSet<Country> Countries { get; set; }

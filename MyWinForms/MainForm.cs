@@ -7,7 +7,7 @@ namespace MyWinForms
     {
         private readonly AppEFContext _context = new AppEFContext();
         private int currentPage = 1;//поточна сторінка
-        private int pageSize = 2;//кількість записів які показуємо
+        private int pageSize = 3;//кількість записів які показуємо
         private int totalPages = 0; //Кільекість сторінок, які можна відображати
         
 
@@ -18,15 +18,12 @@ namespace MyWinForms
         }
         private void LoadList()
         {
-            dgvUsers.Rows.Clear();
-
-            //var users = _context.Users.ToList();
+            dgvUsers.Rows.Clear();            
             var query = _context.Users.AsQueryable();//робимо sql запит
             var users = query
                 .Skip((currentPage - 1) * pageSize) //Кількість запитів які прорускаємо 
                 .Take(pageSize)//Кількість записів які виводимо з БД 
                 .ToList();
-
 
             foreach (var user in users)
             {
@@ -35,19 +32,7 @@ namespace MyWinForms
                 dgvUsers.Rows.Add(row);
             }
             int count = query.Count();
-            totalPages = (int)Math.Ceiling(totalPages / (double)pageSize);
-
-            //if (currentPage == totalPages)
-            //{
-            //    btnNext.Enabled = false;
-            //}
-            //else 
-            //if (currentPage == 1)
-            //{
-            //    btnPrev.Enabled = false;
-            //}
-            //else btnPrev.Enabled = true;
-
+            totalPages = (int)Math.Ceiling(count / (double)pageSize);
             btnNext.Enabled = currentPage == totalPages ? false : true;
             btnPrev.Enabled = currentPage == 1  ? false : true;
         }
@@ -81,46 +66,50 @@ namespace MyWinForms
                 
             }
         }
-
         private void btnDelete_Click(object sender, EventArgs e)
         {
-
-            foreach (DataGridViewRow row in dgvUsers.SelectedRows)
+            int selectRow = dgvUsers.GetCellCount(DataGridViewElementStates.Selected);
+            if (selectRow > 0)
             {
-                dgvUsers.Rows.Remove(row);
+                if (dgvUsers.AreAllCellsSelected(true))
+                {
+                    MessageBox.Show("All cell are selected");
+                }
+                else
+                {
+                    if (selectRow > 1)
+                    {
+                        MessageBox.Show("Оберіть один рядок");
+                        return;
+                    }
+                    var index = dgvUsers.SelectedCells[0].RowIndex;
+                    int id = (int)dgvUsers.Rows[index].Cells[0].Value;
+                    var user = _context.Users.SingleOrDefault(x => x.Id == id);
+                    if (user != null)
+                    {
+                        _context.Users.Remove(user);
+                        _context.SaveChanges();
+                        LoadList();
+                    }
+                }
             }
-
-
-            //var item = dgvUsers.SelectedRows;
-
-            //AppUser user = new AppUser()
+            //else
             //{
-            //    Photo = item[1].ToString(),
-            //    Name = item[2].ToString(),
-            //    Email = item[3].ToString(),
-            //    Phone = item[4].ToString()
-            //};
+            //    MessageBox.Show("Оберіть один рядок який потрібно змінити ");
+            //}
 
-            //_context.Remove(user);
-            //_context.SaveChanges();
-            //LoadList();
 
         }
-
         private void btnNext_Click(object sender, EventArgs e)
         {
             currentPage++;
             LoadList();
         }
-
-
-
         private void btnPrev_Click(object sender, EventArgs e)
         {
             currentPage--;
             LoadList();
         }
-
         private void btnEdit_Click(object sender, EventArgs e)
         {
             int selectRow = dgvUsers.GetCellCount(DataGridViewElementStates.Selected);
@@ -157,16 +146,15 @@ namespace MyWinForms
                                 bitmap.Save(Path.Combine("Image" ,  imageName), ImageFormat.Jpeg);
                                 user.Photo = imageName;
                             }
-                            user.Email= dlg.Email;
-                            user.Phone= dlg.Phone; 
-                            user.Name= dlg.Pib;
+                            user.Email = dlg.Email;
+                            user.Phone = dlg.Phone; 
+                            user.Name = dlg.Pib;
                             
                             //_context.Users.Update(user); // два варіанта як зробити
                             _context.SaveChanges();
-                        }
-                    
-                    }
-                    MessageBox.Show("Id = " + id);
+                            LoadList();
+                        }                    
+                    }                    
                 }
             }
             else

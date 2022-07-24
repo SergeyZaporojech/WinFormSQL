@@ -40,12 +40,13 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.btnPrev = new System.Windows.Forms.Button();
             this.btnEdit = new System.Windows.Forms.Button();
+            this.btnCountry = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvUsers)).BeginInit();
             this.SuspendLayout();
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(772, 12);
+            this.btnSearch.Location = new System.Drawing.Point(493, 12);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(117, 44);
             this.btnSearch.TabIndex = 0;
@@ -125,7 +126,7 @@
             // 
             // btnDelete
             // 
-            this.btnDelete.Location = new System.Drawing.Point(358, 12);
+            this.btnDelete.Location = new System.Drawing.Point(302, 12);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(133, 44);
             this.btnDelete.TabIndex = 3;
@@ -155,19 +156,29 @@
             // 
             // btnEdit
             // 
-            this.btnEdit.Location = new System.Drawing.Point(26, 62);
+            this.btnEdit.Location = new System.Drawing.Point(162, 12);
             this.btnEdit.Name = "btnEdit";
-            this.btnEdit.Size = new System.Drawing.Size(117, 48);
+            this.btnEdit.Size = new System.Drawing.Size(117, 44);
             this.btnEdit.TabIndex = 5;
             this.btnEdit.Text = "Змінити";
             this.btnEdit.UseVisualStyleBackColor = true;
             this.btnEdit.Click += new System.EventHandler(this.btnEdit_Click);
+            // 
+            // btnCountry
+            // 
+            this.btnCountry.Location = new System.Drawing.Point(756, 12);
+            this.btnCountry.Name = "btnCountry";
+            this.btnCountry.Size = new System.Drawing.Size(109, 44);
+            this.btnCountry.TabIndex = 6;
+            this.btnCountry.Text = "Країни";
+            this.btnCountry.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1206, 506);
+            this.Controls.Add(this.btnCountry);
             this.Controls.Add(this.btnEdit);
             this.Controls.Add(this.btnPrev);
             this.Controls.Add(this.btnNext);
@@ -196,5 +207,6 @@
         private DataGridViewTextBoxColumn UserEmailCol;
         private DataGridViewTextBoxColumn UserPhoneCol;
         private Button btnEdit;
+        private Button btnCountry;
     }
 }
